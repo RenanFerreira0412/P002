@@ -3,3 +3,4 @@
 - InventoryControlApp: Sistema de controle de estoque
 
 - NewsApp: Sistema de notícias
+
