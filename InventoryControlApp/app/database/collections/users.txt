@@ -1,0 +1,2 @@
+{"uid": "98855e888cf74f808dbc0dd3007fcb08", "name": "Renan Igor de Lima Ferreira", "email": "renan@gmail.com", "password": "123123", "createdAt": "2023-12-19 10:35:27.260912"}
+{"uid": "d38bf907fa0c494ebce296b29fe499fc", "name": "Luciana Nunes", "email": "luciana@gmail.com", "password": "123123", "createdAt": "2023-12-19 13:16:05.562767"}
