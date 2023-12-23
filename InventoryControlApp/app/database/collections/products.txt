@@ -1,2 +1,0 @@
-{"id": "b8cc936b8a8341fca86a77c3935ec2d6", "name": "Leite", "description": "Desnatado", "unit": "Caixa", "maxStock": "500", "minStock": "250"}
-{"id": "b8cc936b8a8341fca86a77c3935ec2d6", "name": "Sabonete", "description": "Com aroma de coco", "unit": "Unidade", "maxStock": "300", "minStock": "200"}

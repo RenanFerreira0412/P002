@@ -2,7 +2,7 @@ import uuid
 
 
 class Product:
-    def __init__(self, name, description, unit, maxStock, minStock, id=uuid.uuid4().hex):
+    def __init__(self, name, description, unit, minStock, maxStock, id):
         self.id = id
         self.name = name  # nome do produto
         self.description = description  # descrição do produto

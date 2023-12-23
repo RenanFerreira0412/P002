@@ -1,8 +1,7 @@
 from models.product import Product
 import json
-import uuid
 import pandas as pd
-
+import uuid
 
 class ProductDAO:
     # referência a coleção products
@@ -13,29 +12,26 @@ class ProductDAO:
         # Abre o arquivo para leitura e escrita
         with open(cls.product_instance, "r") as file:
             # Lê o conteúdo atual do arquivo como uma lista de objetos JSON
-            # products = [Product(**json.loads(line)) for line in file]
+
             products = [json.loads(line) for line in file]
 
-            # Converte a lista de objetos JSON para uma string JSON
-            json_data = json.dumps(products)
+            # Converte o dicionário para um DataFrame
+            df = pd.DataFrame.from_dict(products)
 
-            # Convert JSON string to a Pandas DataFrame
-            df = pd.read_json(json_data)
-
-            # Convert Pandas DataFrame to a Python list
+            # Converte o DataFrame para uma lista de listas
             all_products = df.values.tolist()
-
-            print(all_products)
 
             file.close()
 
-            return all_products
+        return all_products
 
     @classmethod
     def insertOne(cls, data):
-        new_product = vars(Product(name=data['name'], description=data['description'],
+        id = uuid.uuid4().hex
+
+        new_product = vars(Product(id=id,name=data['name'], description=data['description'],
                            unit=data['unit'], maxStock=data['maxStock'], minStock=data['minStock']))
-        print(new_product)
+        
         # Abre o arquivo para leitura e escrita
         with open(cls.product_instance, "r+") as file:
             # Lê o conteúdo atual do arquivo como uma lista de objetos JSON
@@ -54,8 +50,47 @@ class ProductDAO:
 
     @classmethod
     def updateOne(cls, data, productId):
-        pass
+        product = vars(Product(id=productId, name=data['name'], description=data['description'],
+                               unit=data['unit'], maxStock=data['maxStock'], minStock=data['minStock']))
+
+        print(data)
+        print(productId)
+
+        # lendo o arquivo
+        with open(cls.product_instance, "r") as f:
+
+            # lendo cada linha do arquivo
+            products = f.readlines()
+
+        # escrevendo no arquivo
+        with open(cls.product_instance, "w") as f:
+
+            for line in products:
+                # escrevendo os produtos
+                line_data = line
+                if json.loads(line)['id'] == productId:
+                    line_data = json.dumps(product) + '\n'
+
+                f.write(line_data)
+
+            f.close()
 
     @classmethod
     def deleteOne(cls, productId):
-        pass
+        print("Estou deletando um dado")
+        # lendo o arquivo
+        with open(cls.product_instance, "r") as f:
+
+            # lendo cada linha do arquivo
+            data = f.readlines()
+
+        # escrevendo no arquivo
+        with open(cls.product_instance, "w") as f:
+
+            for line in data:
+
+                # escrevendo apenas os produtos que não serão deletados
+                if json.loads(line)['id'] != productId:
+                    f.write(line)
+
+            f.close()
