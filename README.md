@@ -13,3 +13,8 @@
 - NewsApp: Sistema de notícias
 
 ![img7](https://github.com/RenanFerreira0412/P002/assets/96136397/2a09789d-8967-4786-883e-8d416af48e6f)
+
+## Ferramentas utilizadas
+
+* Python
+* CustomTkinter
