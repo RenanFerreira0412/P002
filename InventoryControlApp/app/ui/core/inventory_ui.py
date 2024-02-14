@@ -32,7 +32,6 @@ class InventoryUI(customtkinter.CTkTabview):
         self.product.grid(row=2, column=0,
                           padx=20, pady=10,
                           sticky="ew")
-        self.product.set(self.products[0])
 
         # campo valor unitário
         self.value = customtkinter.CTkEntry(
@@ -92,6 +91,8 @@ class InventoryUI(customtkinter.CTkTabview):
             self.n_entries.insert(0, self.inventory.n_entries)
             self.n_outputs.insert(0, self.inventory.n_outputs)
 
+        if len(self.products) != 0:
+            self.product.set(self.products[0])
 
         self.create_treeview()
 
@@ -216,13 +217,12 @@ class InventoryUI(customtkinter.CTkTabview):
             data["total_val_outputs"] = f"{total_val_outputs:.2f}"
             data["daily_balance_number"] = f"{daily_balance_number:.2f}"
             data["daily_balance_total_val"] = f"{daily_balance_total_val:.2f}"
-            
 
             if self.is_editing:
                 # atualizando o produto no inventário
                 InventoryDAO.updateOne(
                     data=data, inventoryId=self.inventory.id)
-                
+
                 self.is_editing = False
             else:
                 # inserindo um novo produto no inventário

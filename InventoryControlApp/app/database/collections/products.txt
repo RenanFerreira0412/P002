@@ -1,0 +1,2 @@
+{"id": "7cc51bb0809c4a3abbbd5ed091a59031", "name": "Leite", "description": "Integral 8 und.", "unit": "CX", "maxStock": "250", "minStock": "100"}
+{"id": "f361fc1fa685458681ebbc35e884f1b6", "name": "Cerveja ", "description": "Skol Lata 350ml", "unit": "UN", "maxStock": "100", "minStock": "50"}

@@ -8,7 +8,7 @@ class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
 
-        self.title("App de Notícias")
+        self.title("Controle de Estoque")
         self.geometry("1000x700")
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(0, weight=1)

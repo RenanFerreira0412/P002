@@ -1,0 +1,1 @@
+{"uid": "289e7909bba3412795f04a79908b0644", "name": "Renan Igor de Lima Ferreira", "email": "renan@gmail.com", "password": "123123", "createdAt": "2023-12-23 17:47:52.335186"}
