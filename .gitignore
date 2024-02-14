@@ -4,3 +4,8 @@ NewsApp/.env
 
 # pasta InventoryControlApp
 InventoryControlApp/venv
+
+# pasta TrabalhoFinal
+TrabalhoFinal/backend/venv
+TrabalhoFinal/backend/.env
+TrabalhoFinal/frontend/.env
