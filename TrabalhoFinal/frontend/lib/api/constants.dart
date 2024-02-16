@@ -11,6 +11,8 @@ class ApiConstants {
   static String loginEndpoint = dotenv.get('LOGIN');
   static String registerEndpoint = dotenv.get('REGISTER');
   static String logoutEndpoint = dotenv.get('LOGOUT');
+  static String verifyUserEndpoint = dotenv.get('VERIFY_USER');
+  static String changePwdEndpoint = dotenv.get('CHANGE_PWD');
 
   // Endpoint para operações CRUD
   static String createEndpoint = dotenv.get('CREATE');

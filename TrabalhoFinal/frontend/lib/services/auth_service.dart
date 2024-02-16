@@ -2,24 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:frontend/api/constants.dart';
 import 'package:frontend/models/user.dart';
 import 'package:frontend/utils/utils.dart';
+import 'package:go_router/go_router.dart';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-Future<http.Response> createAlbum(String title) {
-  return http.post(
-    Uri.parse('https://jsonplaceholder.typicode.com/albums'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, String>{
-      'title': title,
-    }),
-  );
-}
-
 class AuthService extends ChangeNotifier {
   User? usuario;
+  String? verifiedUserId;
   bool isLoading = true;
 
   AuthService() {
@@ -41,7 +31,7 @@ class AuthService extends ChangeNotifier {
   }
 
   // login do usuário
-  login(String email, String password) async {
+  login(BuildContext context, String email, String password) async {
     var url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.loginEndpoint}');
 
     await http
@@ -55,6 +45,11 @@ class AuthService extends ChangeNotifier {
         .then((response) {
       var data = json.decode(response.body);
       Utils.schowSnackBar(data['message']);
+      // navegando para o widget que controla o status de autenticação
+      if (response.statusCode == 200) {
+        context.go('/');
+      }
+
       _authCheck();
     }).catchError((error) {
       debugPrint("Erro na solicitação HTTP: $error");
@@ -62,7 +57,8 @@ class AuthService extends ChangeNotifier {
   }
 
   // cadastro do usuário
-  register(String username, String email, String password) async {
+  register(BuildContext context, String username, String email,
+      String password) async {
     var url =
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.registerEndpoint}');
 
@@ -79,6 +75,11 @@ class AuthService extends ChangeNotifier {
         .then((response) {
       var data = json.decode(response.body);
       Utils.schowSnackBar(data['message']);
+      // navegando para o widget que controla o status de autenticação
+      if (response.statusCode == 200) {
+        context.go('/');
+      }
+
       _authCheck();
     }).catchError((error) {
       debugPrint("Erro na solicitação HTTP: $error");
@@ -99,6 +100,58 @@ class AuthService extends ChangeNotifier {
     });
   }
 
+  // verificar usuário
+  verifyUser(BuildContext context, String email) async {
+    var url =
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.verifyUserEndpoint}');
+
+    await http
+        .post(url,
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(<String, String>{
+              'email': email,
+            }))
+        .then((response) {
+      var data = json.decode(response.body);
+
+      Utils.schowSnackBar(data['message']);
+
+      // navegando para a tela de mudança de senha
+      if (response.statusCode == 200) {
+        // id do usuário verificado
+        verifiedUserId = data['userId'];
+
+        context.go('/app/mudarsenha');
+      }
+
+      notifyListeners();
+    }).catchError((error) {
+      debugPrint("Erro na solicitação HTTP: $error");
+    });
+  }
+
   // mudança de senha
-  resetPassword(String email) async {}
+  resetPassword(String password) async {
+    var url =
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.changePwdEndpoint}');
+
+    await http
+        .post(url,
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(<String, String>{
+              'password': password,
+              'userId': verifiedUserId!,
+            }))
+        .then((response) {
+      var data = json.decode(response.body);
+      Utils.schowSnackBar(data['message']);
+      notifyListeners();
+    }).catchError((error) {
+      debugPrint("Erro na solicitação HTTP: $error");
+    });
+  }
 }

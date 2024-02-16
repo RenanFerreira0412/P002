@@ -3,6 +3,7 @@ import 'package:frontend/ui/external/components/introduction_section.dart';
 import 'package:frontend/ui/external/components/league_search_section.dart';
 import 'package:frontend/ui/external/components/welcome_ui_header.dart';
 import 'package:frontend/ui/external/widget/drawer_option.dart';
+import 'package:frontend/utils/responsive.dart';
 
 class WelcomeUI extends StatefulWidget {
   const WelcomeUI({super.key});
@@ -61,6 +62,18 @@ class _WelcomeUIState extends State<WelcomeUI> {
                 );
               },
             ),
+            if (Responsive.isMobile(context)) ...[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18),
+                child: Tooltip(
+                  message: 'Acompanhar os jogos ao vivo',
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    child: const Text('Ao vivo agora'),
+                  ),
+                ),
+              ),
+            ]
           ],
         ),
       ),

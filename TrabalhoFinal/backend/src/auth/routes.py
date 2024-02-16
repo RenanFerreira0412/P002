@@ -127,8 +127,8 @@ def check_user():
     return jsonify({"message": "Este endereço de email não foi encontrado."}), 404
 
 
-@auth.route('/app/senha/mudar/<user_id>', methods=['POST', 'PUT'])
-def resetPassword(user_id):
+@auth.route('/app/senha/mudar', methods=['POST'])
+def resetPassword():
     """
     Mudança de senha do usuário
     """
@@ -139,7 +139,7 @@ def resetPassword(user_id):
     hashed_password = generate_password_hash(data["password"])
 
     # atualizando a senha do usuário
-    users.update_one({"_id": ObjectId(user_id)}, {
+    users.update_one({"_id": ObjectId(data["userId"])}, {
                      "$set": {"password": hashed_password}})
 
     return jsonify({"message": "Sua senha foi atualizada com sucesso! Realize novamente o seu login."}), 200
